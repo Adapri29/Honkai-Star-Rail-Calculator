@@ -1,0 +1,385 @@
+{
+  "Mydei": {
+    "id": "Mydei",
+    "name": "Mydei",
+    "rarity": 5,
+    "path": "Destruction",
+    "element": "Imaginary",
+    "img": "https://api.hakush.in/hsr/UI/avatarshopicon/1404.webp",
+
+    "baseStats": {
+      "80": {
+        "pv": 1552,
+        "atk": 426.89,
+        "def": 194.04,
+        "spd": 95,
+        "critRate": 0.05,
+        "critDmg": 0.5,
+        "energy": 160
+      }
+    },
+
+    "traces": {
+      "basic": {
+        "name": "Vow of Voyage",
+        "type": "single",
+        "energyGen": 20,
+        "description": "Deals Imaginary DMG equal to [main] of Mydei's Max PV to one designated enemy.",
+        "damage": {
+          "main": {
+            "multipliers": [
+              0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7
+            ],
+            "stats": "pv",
+            "break": 30
+          }
+        }
+      },
+
+      "skill": {
+        "name": "Deaths are Legion, Regrets are None",
+        "type": "blast",
+        "energyGen": 30,
+        "description": "Consumes PV by an amount equal to 50% of Mydei's current PV. Deals Imaginary DMG equal to [main]% of Mydei's Max PV to one designated enemy and Imaginary DMG equal to [adjacent]% of Mydei's Max PV to adjacent targets. If the current PV is not sufficient, using Skill reduces Mydei's current PV to 1.",
+        "damage": {
+          "main": {
+            "multipliers": [
+              0.45, 0.495, 0.54, 0.585, 0.63, 0.675, 0.7313, 0.7875, 0.8438, 0.9
+            ],
+            "stats": "pv",
+            "break": 60
+          },
+          "adjacent": {
+            "multipliers": [
+              0.25, 0.275, 0.3, 0.325, 0.35, 0.375, 0.4063, 0.4575, 0.4688, 0.5
+            ],
+            "stats": "pv",
+            "break": 30
+          }
+        }
+      },
+
+      "ultimate": {
+        "name": "Throne of Bones",
+        "type": "blast",
+        "energyGen": 5,
+        "cost": 160,
+        "description": "",
+        "damage": {
+          "main": {
+            "multipliers": [
+              0.96, 1.024, 1.088, 1.152, 1.216, 1.28, 1.36, 1.44, 1.52, 1.6
+            ],
+            "stats": "pv",
+            "break": 60
+          },
+          "adjacent": {
+            "multipliers": [
+              0.6, 0.64, 0.68, 0.72, 0.76, 0.8, 0.85, 0.9, 0.95, 1
+            ],
+            "stats": "pv",
+            "break": 60
+          }
+        }
+      },
+
+      "enhancedSkills": {
+        "kingslayerBeKing": {
+          "id": "KingslayerBeKing",
+          "name": "Kingslayer Be King",
+          "type": "blast",
+          "autoCast": true,
+          "energyGen": 30,
+          "hpConsumption": {
+            "type": "percentCurrentPV",
+            "value": 0.35,
+            "fallbackToOnePV": true
+          },
+          "damage": {
+            "main": {
+              "multipliers": [
+                0.55, 0.605, 0.66, 0.715, 0.77, 0.825, 0.8938, 0.9625, 1.0313,
+                1.1
+              ],
+              "stats": "pv",
+              "break": 60
+            },
+            "adjacent": {
+              "multipliers": [
+                0.33, 0.363, 0.396, 0.429, 0.462, 0.495, 0.5363, 0.5775, 0.6188,
+                0.66
+              ],
+              "stats": "pv",
+              "break": 60
+            }
+          }
+        },
+
+        "godslayerBeGod": {
+          "id": "GodslayerBeGod",
+          "name": "Godslayer Be God",
+          "type": "blast",
+          "autoCast": true,
+          "energyGen": 10,
+          "chargeCost": 150,
+          "chargeBlockedDuringCast": true,
+          "damage": {
+            "main": {
+              "multipliers": [
+                1.4, 1.54, 1.68, 1.82, 1.96, 2.1, 2.275, 2.45, 2.625, 2.8
+              ],
+              "stats": "pv",
+              "break": 90
+            },
+            "adjacent": {
+              "multipliers": [
+                0.84, 0.924, 1.008, 1.092, 1.176, 1.26, 1.365, 1.47, 1.575, 1.68
+              ],
+              "stats": "pv",
+              "break": 90
+            }
+          }
+        }
+      },
+
+      "talent": {
+        "name": "Blood for Blood",
+        "type": "potentiation",
+        "description": "For each 1% of PV lost, accumulates 1 point of Charge (up to 200). At 100 Charge, enter Vendetta. At 150 Charge inside Vendetta, gain 1 extra turn and auto-cast Godslayer Be God. When receiving a fatal hit in Vendetta, prevent death, exit the state, and restore PV.",
+
+        "mechanics": {
+          "charge": {
+            "gainPerPvLostPercent": 1,
+            "maxCharge": 200,
+            "thresholds": [
+              {
+                "value": 100,
+                "action": "enterVendetta"
+              },
+              {
+                "value": 150,
+                "action": "extraTurnAndGodslayer"
+              }
+            ]
+          },
+
+          "states": {
+            "vendetta": {
+              "id": "vendetta",
+              "maxPvBonusPctOfCurrentMaxPv": 0.5,
+              "defFixed": 0,
+              "onEnter": {
+                "healPctMaxPv": 0.15,
+                "advanceActionPct": 100
+              },
+              "onTurnStart": {
+                "autoCast": "KingslayerBeKing"
+              },
+              "onChargeThreshold": {
+                "150": {
+                  "extraTurn": true,
+                  "autoCast": "GodslayerBeGod"
+                }
+              },
+              "onLethalHit": {
+                "preventDeath": true,
+                "clearCharge": true,
+                "exitState": true,
+                "healPctMaxPv": 0.5
+              }
+            }
+          }
+        }
+      },
+
+      "technique": {
+        "id": "CageOfBrokenLance",
+        "name": "Cage of Broken Lance",
+        "type": "impair",
+        "description": "After using Technique, pulls in enemies within a certain area and inflicts Daze on them for 10 seconds. Dazed enemies will not actively attack ally targets. If actively attacking Dazed enemies, when entering battle, deals Imaginary DMG equal to 80% of Mydei's Max PV to all enemies, and Taunts the targets for 1 turn. This unit accumulates 50 points of Talent's Charge.",
+        "damage": {
+          "allEnemies": {
+            "multipliers": [0.8],
+            "stats": "pv",
+            "break": 0
+          }
+        },
+        "effects": {
+          "pullEnemies": true,
+          "daze": {
+            "durationSeconds": 10
+          },
+          "taunt": {
+            "durationTurns": 1
+          },
+          "chargeGain": {
+            "type": "talentCharge",
+            "value": 50
+          }
+        }
+      }
+    },
+
+    "ascensionPassives": {
+      "A2": {
+        "id": "Earth and Water",
+        "description": "During the Vendetta state, Mydei will not exit the Vendetta state when receiving a killing blow. This effect can trigger 3 time(s) per battle."
+      },
+      "A4": {
+        "id": "Thirty Tyrants",
+        "description": "While in the Vendetta state, Mydei is immune to Crowd Control debuffs."
+      },
+      "A6": {
+        "id": "Bloodied Chiton",
+        "description": "When battle starts, if Mydei's Max HP exceeds 4000, for every 100 excess HP, Mydei's CRIT Rate increases by 1.2%, his Charge ratio from enemy targets' DMG increases by 2.5%, and his HP restored when receiving healing increases by 0.75%. Up to 4000 excess HP can be taken into account for this effect."
+      }
+    },
+
+    "minorTraces": {
+      "A0": [{ "critDMG": 0.053 }],
+      "A2": [{ "hp": 0.04 }],
+      "A3": [{ "critDMG": 0.053 }, { "spd": 2 }],
+      "A4": [{ "critDMG": 0.08 }],
+      "A5": [{ "critDMG": 0.08 }, { "hp": 0.06 }],
+      "A6": [{ "critDMG": 0.107 }, { "spd": 3 }, { "hp": 0.08 }]
+    }
+  },
+
+  "Luocha": {
+    "id": "Luocha",
+    "name": "Luocha",
+    "rarity": 5,
+    "path": "Abundance",
+    "element": "Imaginary",
+    "img": "https://api.hakush.in/hsr/UI/avatarshopicon/1203.webp",
+
+    "baseStats": {
+      "80": {
+        "pv": 756.76,
+        "atk": 363.83,
+        "def": 1281,
+        "spd": 101,
+        "critRate": 0.05,
+        "critDmg": 0.5,
+        "energy": 100
+      }
+    },
+
+    "traces": {
+      "basic": {
+        "name": "Thorns of the Abyss",
+        "type": "single",
+        "energyGen": 20,
+        "description": "Deals Imaginary DMG equal to 50% of Luocha's ATK to one designated enemy.",
+        "damage": {
+          "main": {
+            "multipliers": [0.5, 0.6, 0.7, 0.8, 0.9, 1],
+            "stats": "atk",
+            "break": 30
+          }
+        }
+      },
+
+      "skill": {
+        "name": "Prayer of Abyss Flower",
+        "type": "restore",
+        "energyGen": 30,
+        "description": "After using his Skill, Luocha immediately restores the target ally's HP equal to 40% of Luocha's ATK plus 200. Meanwhile, Luocha gains 1 stack of Abyss Flower. When any ally's HP percentage drops to 50% or lower, an effect equivalent to Luocha's Skill will immediately be triggered and applied to this ally for one time (without consuming Skill Points). This effect can be triggered again after 2 turn(s).",
+        "restore": {
+          "main": {
+            "multipliers": [
+              0.4, 0.425, 0.45, 0.475, 0.5, 0.52, 0.54, 0.56, 0.58, 0.6
+            ],
+            "extra": [200, 320, 410, 500, 560, 620, 665, 710, 755, 800],
+            "stats": "atk"
+          }
+        }
+      },
+
+      "ultimate": {
+        "name": "Death Wish ",
+        "type": "aoe",
+        "energyGen": 5,
+        "cost": 160,
+        "description": "Removes 1 buff(s) from all enemies and deals all enemies Imaginary DMG equal to 120% of Luocha's ATK. At the same time, Luocha gains 1 stack of Abyss Flower.",
+        "damage": {
+          "all": {
+            "multipliers": [1.2, 1.28, 1.36, 1.44, 1.52, 1.6, 1.7, 1.8, 1.9, 2],
+            "stats": "atk",
+            "break": 60
+          }
+        }
+      },
+
+      "talent": {
+        "name": "Cycle of Life",
+        "type": "restore",
+        "description": "When Abyss Flower reaches 2 stacks, Luocha consumes all stacks of Abyss Flower to deploy a Zone against the enemy. When any enemy in the Zone is attacked by an ally, the attacking ally's HP is immediately restored by an amount equal to 12% of Luocha's ATK plus 60. The Zone's effect lasts for 2 turns. When Luocha is knocked down, the Zone will be dispelled.",
+
+        "mechanics": {
+          "stacks": {
+            "resource": "abyssFlower",
+            "maxStacks": 2,
+            "onMaxStacks": {
+              "action": "deployZone",
+              "consumeAll": true
+            }
+          },
+
+          "zone": {
+            "id": "cycleOfLifeZone",
+            "durationTurns": 2,
+            "dispellOnLuochaKnockdown": true,
+            "effects": [
+              {
+                "trigger": "allyAttack",
+                "target": "attackingAlly",
+                "effectType": "restorePV",
+                "amount": {
+                  "formula": "0.12 * Luocha_ATK + 60"
+                }
+              }
+            ]
+          }
+        }
+      },
+
+      "technique": {
+        "id": "Mercy of a Fool",
+        "name": "Mercy of a Fool",
+        "type": "restore",
+        "description": "After the Technique is used, the Talent will be immediately triggered at the start of the next battle.",
+        "mechanics": {
+          "onUse": {
+            "triggerTalentNextBattle": true
+          }
+        }
+      }
+    },
+    "ascensionPassives": {
+      "A2": {
+        "id": "Cleansing Revival",
+        "description": "When Skill's effect is triggered, dispel 1 debuff(s) from one designated ally."
+      },
+      "A4": {
+        "id": "Sanctified",
+        "description": "When any enemy in the Zone is attacked by an ally, all allies (except the attacker) restore HP equal to 7% of Luocha's ATK plus 93."
+      },
+      "A6": {
+        "id": "Through the Valley",
+        "description": "Increases the chance to resist Crowd Control debuffs by 70%."
+      }
+    },
+
+    "minorTraces": {
+      "LVL1": { "atk": 0.04 },
+      "LVL75": { "hp": 0.08 },
+      "LVL80": { "atk": 0.08 },
+      "A2": [{ "hp": 0.04 }],
+      "A3": [{ "atk": 0.04 }, { "def": 0.05 }],
+      "A4": [{ "atk": 0.06 }],
+      "A5": [{ "hp": 0.06 }, { "atk": 0.06 }],
+      "A6": [{ "def": 0.075 }]
+    }
+  }
+}
