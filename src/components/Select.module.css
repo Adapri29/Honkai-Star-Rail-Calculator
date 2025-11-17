@@ -1,0 +1,83 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative;
+  font-size: 12px;
+  line-height: 1.5;
+  width: 100%;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.trigger {
+  padding: 4px 8px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  color: white;
+  height: 30px;
+  border: 1px solid rgb(68, 69, 77);
+  background-color: #202126;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+}
+
+.listbox {
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+  z-index: 3;
+  width: 100%;
+  background-color: #202126;
+  border: 1px solid rgb(68, 69, 77);
+  padding: 0px;
+  justify-content: center;
+  text-align: center;
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto; /* activa scroll vertical */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #555 #202126; /* Firefox: thumb color / track color */
+}
+
+/* Scrollbar general */
+.listbox::-webkit-scrollbar {
+  width: 6px; /* ancho vertical */
+  height: 6px; /* alto horizontal, si lo hubiera */
+}
+
+/* Track (fondo de la barra) */
+.listbox::-webkit-scrollbar-track {
+  background: #202126; /* color del track */
+  border-radius: 8px;
+}
+
+/* Thumb (la parte que se mueve) */
+.listbox::-webkit-scrollbar-thumb {
+  background-color: #555; /* color del thumb */
+  border-radius: 8px;
+  border: 2px solid #202126; /* separa el thumb del track */
+}
+
+/* Opcional: hover para hacerla más visible */
+.listbox::-webkit-scrollbar-thumb:hover {
+  background-color: #888;
+}
+
+.option {
+  padding: 4px 8px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.option:hover {
+  background-color: #353742;
+  cursor: pointer;
+}

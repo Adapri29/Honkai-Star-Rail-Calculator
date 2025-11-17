@@ -1,7 +1,7 @@
 import { CharacterForm } from "./components/CharacterForm";
 import "./App.css";
 
-const characters = [
+export const characters = [
   {
     name: "Mydei",
     level: 80,
@@ -42,6 +42,16 @@ const characters = [
     path: "https://api.hakush.in/hsr/UI/pathicon/memory.webp",
     rarity: 5,
   },
+  {
+    name: "Firefly",
+    level: 60,
+    eidolon: 1,
+    ascension: 4,
+    image: "https://api.hakush.in/hsr/UI/avatarshopicon/1310.webp",
+    element: "https://api.hakush.in/hsr/UI/element/fire.webp",
+    path: "https://api.hakush.in/hsr/UI/pathicon/warrior.webp",
+    rarity: 5,
+  },
 ];
 
 const App = () => {
@@ -51,6 +61,7 @@ const App = () => {
       <CharacterForm {...characters[1]} />
       <CharacterForm {...characters[2]} />
       <CharacterForm {...characters[3]} />
+      <CharacterForm {...characters[4]} />
     </div>
   );
 };
