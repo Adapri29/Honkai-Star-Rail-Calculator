@@ -25,6 +25,7 @@
   box-sizing: border-box;
   width: 100%;
   text-align: left;
+  cursor: pointer;
 }
 
 .listbox {
@@ -80,4 +81,12 @@
 .option:hover {
   background-color: #353742;
   cursor: pointer;
+}
+
+.selected{
+  background-color: #353742;
+}
+
+.placeholder{
+  color: rgb(119, 119, 119);
 }

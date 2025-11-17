@@ -3,7 +3,11 @@ import styles from "./Select.module.css";
 
 interface Props {
   label?: string;
-  options: { value: any; label: string }[];
+  value: any;
+  disabled?: boolean;
+  placeholder?: string;
+  options?: { value: any; label: string }[];
+  onChange: (value: any) => void;
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement>;
     label?: React.HTMLAttributes<HTMLSpanElement>;
@@ -13,10 +17,17 @@ interface Props {
   };
 }
 
-export const Select = ({ label, options, slotProps }: Props) => {
+export const Select = ({
+  label,
+  value,
+  options,
+  slotProps,
+  placeholder,
+  disabled = false,
+  onChange,
+}: Props) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [value, setValue] = useState<any>(options[0].value ?? "");
-
+  console.log(value);
   const { className: rootClassName, ...rootProps } = slotProps?.root ?? {};
   const { className: labelClassName, ...labelProps } = slotProps?.label ?? {};
   const { className: triggerClassName, ...triggerProps } =
@@ -30,7 +41,7 @@ export const Select = ({ label, options, slotProps }: Props) => {
   } = slotProps?.option ?? {};
 
   const selectOption = (option: string) => {
-    setValue(option);
+    onChange(option);
     setOpen(false);
   };
 
@@ -43,27 +54,33 @@ export const Select = ({ label, options, slotProps }: Props) => {
         {label}
       </span>
       <button
-        className={`${styles.trigger}  ${triggerClassName ?? ""}`}
+        disabled={disabled}
+        className={`${styles.trigger}  ${triggerClassName ?? ""} ${
+          value === undefined ? styles.placeholder : ""
+        }`}
         onClick={() => setOpen((prev) => !prev)}
         {...triggerProps}
       >
-        {options.find((opt) => opt.value === value)?.label}
+        {options?.find((opt) => opt.value === value)?.label ?? placeholder}
       </button>
       {open && (
         <ul
           className={`${styles.listbox} ${listboxClassName ?? ""}`}
           {...listboxProps}
         >
-          {options.map((opt) => (
-            <li
-              className={`${styles.option} ${optionClassName ?? ""}`}
-              key={opt.value}
-              onClick={() => selectOption(opt.value)}
-              {...optionProps}
-            >
-              {opt.label}
-            </li>
-          ))}
+          {options &&
+            options.map((opt) => (
+              <li
+                className={`${styles.option} ${optionClassName ?? ""} ${
+                  opt.value === value ? styles.selected : ""
+                }`}
+                key={opt.value}
+                onClick={() => selectOption(opt.value)}
+                {...optionProps}
+              >
+                {opt.label}
+              </li>
+            ))}
         </ul>
       )}
     </div>
