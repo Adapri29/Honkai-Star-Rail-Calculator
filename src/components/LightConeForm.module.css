@@ -22,9 +22,9 @@
 .form {
   background-color: rgb(34 37 46);
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   box-sizing: border-box;
   border-radius: 0px 0px 12px 12px;
 }
@@ -47,7 +47,6 @@
   object-position: center top;
 }
 
-.element,
 .path,
 .rarity {
   position: absolute;
@@ -55,7 +54,6 @@
   z-index: 2;
 }
 
-.element,
 .path {
   width: 32px;
   height: 32px;
@@ -63,6 +61,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  bottom: 10px;
+  left: 10px;
 }
 
 .rarity {
@@ -73,21 +73,8 @@
   z-index: 2;
   font-size: 12px;
   color: yellow;
-}
-
-.element {
-  bottom: 45px;
-  left: 5px;
-}
-
-.path {
-  bottom: 5px;
-  left: 5px;
-}
-
-.rarity {
-  bottom: 5px;
-  right: 5px;
+  bottom: 10px;
+  right: 10px;
 }
 
 .path img {
@@ -121,5 +108,46 @@
 }
 
 .name {
-  max-width: 200px;
+  width: 200px;
+}
+
+.stats {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  color: rgb(204, 204, 204);
+  gap: 12px;
+  height: 76px;
+}
+
+.stats > div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.stats p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.statName {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  color: white;
+}
+
+.statName img {
+  width: 14px;
+  aspect-ratio: 1/1;
+  object-fit: contain;
+}
+
+.stats hr {
+  flex: 1;
+  height: 1px;
+  background-color: rgb(204, 204, 204);
+  border: none;
+  margin: 4px 0;
 }

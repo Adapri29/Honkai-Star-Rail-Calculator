@@ -11,7 +11,11 @@ interface LightCone {
   image: string;
   path: string;
   rarity: number;
-  stats: { hp: number; atk: number; def: number };
+  stats: {
+    HP: number;
+    ATK: number;
+    DEF: number;
+  }[][];
 }
 
 const levelsRange = [
@@ -91,6 +95,14 @@ export const LightConeForm = () => {
     else setForm((prev) => ({ ...prev!, [name]: value }));
   };
 
+  const getStatPerLevel = (stat: "HP" | "ATK" | "DEF") => {
+    if (!form) return 0;
+
+    const minLevel = form.ascention === 0 ? 1 : (form.ascention + 1) * 10;
+
+    return form.stats[form.ascention][form.level - minLevel][stat];
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>Light Cone</div>
@@ -149,6 +161,32 @@ export const LightConeForm = () => {
               options={superpositionOptions}
               slotProps={{ root: { className: styles.superposition } }}
             />
+          </div>
+          <div className={styles.stats}>
+            <div>
+              <div className={styles.statName}>
+                <img src="https://enka.network/ui/hsr/SpriteOutput/UI/Avatar/Icon/IconMaxHP.png" />
+                <p>Base HP</p>
+              </div>
+              <hr />
+              <p>{getStatPerLevel("HP")}</p>
+            </div>
+            <div>
+              <div className={styles.statName}>
+                <img src="https://enka.network/ui/hsr/SpriteOutput/UI/Avatar/Icon/IconAttack.png" />
+                <p>Base ATK</p>
+              </div>
+              <hr />
+              <p>{getStatPerLevel("ATK")}</p>
+            </div>
+            <div>
+              <div className={styles.statName}>
+                <img src="https://enka.network/ui/hsr/SpriteOutput/UI/Avatar/Icon/IconDefence.png" />
+                <p>Base DEF</p>
+              </div>
+              <hr />
+              <p>{getStatPerLevel("DEF")}</p>
+            </div>
           </div>
         </div>
       </div>

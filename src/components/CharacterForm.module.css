@@ -22,9 +22,9 @@
 .form {
   background-color: rgb(34 37 46);
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   display: flex;
-  gap: 10px;
+  gap: 12px;
   box-sizing: border-box;
   border-radius: 0px 0px 12px 12px;
 }
