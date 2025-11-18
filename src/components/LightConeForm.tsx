@@ -1,17 +1,17 @@
 import { useMemo, useState } from "react";
-import { characters } from "../pages/CharacterBuilderPage";
-import styles from "./CharacterForm.module.css";
+import styles from "./LightConeForm.module.css";
 import { Select } from "./Select/Select";
+import { lightCones } from "../pages/CharacterBuilderPage";
 
-interface Character {
+interface LightCone {
   name: string;
   level: number;
-  eidolon: number;
+  superposition: number;
   ascention: number;
   image: string;
-  element: string;
   path: string;
   rarity: number;
+  stats: { hp: number; atk: number; def: number };
 }
 
 const levelsRange = [
@@ -29,21 +29,21 @@ const ascentionOptions = Array.from({ length: 7 }, (_, i) => ({
   label: `A${6 - i}`,
 }));
 
-const eidolonOptions = Array.from({ length: 7 }, (_, i) => ({
-  value: 6 - i,
-  label: `E${6 - i}`,
+const superpositionOptions = Array.from({ length: 5 }, (_, i) => ({
+  value: 5 - i,
+  label: `S${5 - i}`,
 }));
 
-export const CharacterForm = () => {
-  const [form, setForm] = useState<Character | null>(null);
+export const LightConeForm = () => {
+  const [form, setForm] = useState<LightCone | null>(null);
 
-  const characterOptions = useMemo(
+  const lightConeOptions = useMemo(
     () =>
-      characters.map((character) => ({
-        value: character.name,
-        label: character.name,
+      lightCones.map((lightcone) => ({
+        value: lightcone.name,
+        label: lightcone.name,
       })),
-    [characters]
+    [lightCones]
   );
   const levelOptions: { label: string; value: number }[] = useMemo(
     () =>
@@ -65,14 +65,14 @@ export const CharacterForm = () => {
   );
 
   const handleNameChange = (value: string) => {
-    const character = characters.find((c) => c.name === value);
+    const lightCone = lightCones.find((l) => l.name === value);
 
-    if (!character) return;
+    if (!lightCone) return;
     setForm({
       level: 1,
       ascention: 0,
-      eidolon: 0,
-      ...character,
+      superposition: 1,
+      ...lightCone,
     });
   };
 
@@ -93,15 +93,12 @@ export const CharacterForm = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Character</div>
+      <div className={styles.title}>Light Cone</div>
       <div className={styles.form}>
         <div className={styles.imageWrapper}>
           {form && (
             <>
               <img className={styles.characterImage} src={form?.image} />
-              <div className={styles.element}>
-                <img src={form?.element} />
-              </div>
               <div className={styles.path}>
                 <img src={form?.path} />
               </div>
@@ -118,7 +115,8 @@ export const CharacterForm = () => {
             value={form?.name}
             placeholder="Select a character"
             onChange={onChange}
-            options={characterOptions}
+            options={lightConeOptions}
+            slotProps={{ root: { className: styles.name } }}
           />
           <div className={styles.row}>
             <Select
@@ -143,13 +141,13 @@ export const CharacterForm = () => {
             />
 
             <Select
-              value={form?.eidolon}
-              name="eidolon"
-              placeholder="E0"
+              value={form?.superposition}
+              name="superposition"
+              placeholder="S0"
               disabled={form === null}
               onChange={onChange}
-              options={eidolonOptions}
-              slotProps={{ root: { className: styles.eidolon } }}
+              options={superpositionOptions}
+              slotProps={{ root: { className: styles.superposition } }}
             />
           </div>
         </div>

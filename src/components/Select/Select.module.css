@@ -26,6 +26,9 @@
   width: 100%;
   text-align: left;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden; /* ocultar el exceso de texto */
+  text-overflow: ellipsis;
 }
 
 .listbox {
@@ -83,10 +86,10 @@
   cursor: pointer;
 }
 
-.selected{
+.selected {
   background-color: #353742;
 }
 
-.placeholder{
+.placeholder {
   color: rgb(119, 119, 119);
 }

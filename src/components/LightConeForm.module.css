@@ -31,12 +31,13 @@
 
 .imageWrapper {
   position: relative;
-  width: 134px;
-  height: 134px;
+  width: 154px;
+  height: 214px;
   border-radius: 0.5rem;
   overflow: hidden;
   background-color: rgb(32, 33, 38);
   border: 1px solid rgb(68, 69, 77);
+  padding: 4px;
 }
 
 .characterImage {
@@ -89,19 +90,10 @@
   right: 5px;
 }
 
-.element img,
-.path img {
-  object-fit: contain;
-}
-
-.element img {
-  width: 20px;
-  height: 20px;
-}
-
 .path img {
   width: 24px;
   height: 24px;
+  object-fit: contain;
 }
 
 .inputs {
@@ -114,16 +106,20 @@
 .row {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  align-items: flex-end;
   gap: 10px;
   width: 100%;
 }
 
 .ascention,
-.eidolon {
+.superposition {
   max-width: 34px;
 }
 
 .level {
-  max-width: 150px;
+  max-width: 116px;
+}
+
+.name {
+  max-width: 200px;
 }

@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Select.module.css";
 
 interface Props {
+  name?: string;
   label?: string;
   value: any;
   disabled?: boolean;
   placeholder?: string;
   options?: { value: any; label: string }[];
-  onChange: (value: any) => void;
+  onChange: (value: any, name?: string) => void;
   slotProps?: {
     root?: React.HTMLAttributes<HTMLDivElement>;
     label?: React.HTMLAttributes<HTMLSpanElement>;
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export const Select = ({
+  name,
   label,
   value,
   options,
@@ -26,8 +28,9 @@ export const Select = ({
   disabled = false,
   onChange,
 }: Props) => {
-  const [open, setOpen] = useState<boolean>(false);
-  console.log(value);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
+
   const { className: rootClassName, ...rootProps } = slotProps?.root ?? {};
   const { className: labelClassName, ...labelProps } = slotProps?.label ?? {};
   const { className: triggerClassName, ...triggerProps } =
@@ -40,13 +43,33 @@ export const Select = ({
     ...optionProps
   } = slotProps?.option ?? {};
 
-  const selectOption = (option: string) => {
-    onChange(option);
-    setOpen(false);
+  const selectOption = (value: string) => {
+    onChange(value, name);
+    setIsOpen(false);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className={`${styles.root} ${rootClassName ?? ""}`} {...rootProps}>
+    <div
+      ref={ref}
+      className={`${styles.root} ${rootClassName ?? ""}`}
+      {...rootProps}
+    >
       <span
         className={`${styles.label} ${labelClassName ?? ""}`}
         {...labelProps}
@@ -58,12 +81,12 @@ export const Select = ({
         className={`${styles.trigger}  ${triggerClassName ?? ""} ${
           value === undefined ? styles.placeholder : ""
         }`}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setIsOpen((prev) => !prev)}
         {...triggerProps}
       >
         {options?.find((opt) => opt.value === value)?.label ?? placeholder}
       </button>
-      {open && (
+      {isOpen && (
         <ul
           className={`${styles.listbox} ${listboxClassName ?? ""}`}
           {...listboxProps}
